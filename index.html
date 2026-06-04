@@ -490,45 +490,40 @@
         }
 
         // Envío del Formulario
-                    function handleFormSubmit(event) {
+    	 function handleFormSubmit(event) {
     event.preventDefault();
 
-    // PEGA AQUÍ ENTRE LAS COMILLAS TU URL DE GOOGLE APPS SCRIPT QUE COPIASTE EN EL PASO 2
-    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwTeBkBkAXhnNZ6S9_5RHkk_LaHdlIrVtUFbAg3WJFdo1WrdRmVigm680BHAkOn6e8/exec";
+    // PEGA AQUÍ TU NUEVA URL DE GOOGLE APPS SCRIPT TERMINADA EN /exec
+    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzJTTj1bLxRa35uLdJPKz3WefHtUMw5RXWiFQCEhwAxZ7nF_5t1Po8Qz8emmZKoFICt/exec";
 
-    // Recolectar datos de los campos de Kuatro
-    const newLead = {
-        name: document.getElementById("full_name").value,
-        company: document.getElementById("company_name").value || "N/A",
-        product: document.querySelector('input[name="product_line"]:checked').value,
-        acquisition: document.querySelector('input[name="acquisition_type"]:checked').value,
-        location: document.getElementById("project_location").value,
-        timeframe: document.getElementById("timeframe").value,
-        phone: document.getElementById("phone").value,
-        email: document.getElementById("email").value,
-        details: document.getElementById("details").value || "Sin detalles específicos"
-    };
-
-    // Cambiar texto del botón para mostrar que se está guardando
+    // Cambiar texto del botón de Kuatro
     const submitBtn = document.getElementById("submit-btn");
     const originalText = submitBtn.innerHTML;
     submitBtn.innerHTML = "Guardando en la Nube... <i class='fa-solid fa-spinner animate-spin ml-2'></i>";
     submitBtn.disabled = true;
 
-    // Enviar datos reales a tu Google Sheets mediante la API
+    // Formatear los datos como parámetros de formulario directo (Método seguro para Google)
+    const formData = new URLSearchParams();
+    formData.append("name", document.getElementById("full_name").value);
+    formData.append("company", document.getElementById("company_name").value || "N/A");
+    formData.append("product", document.querySelector('input[name="product_line"]:checked').value);
+    formData.append("acquisition", document.querySelector('input[name="acquisition_type"]:checked').value);
+    formData.append("location", document.getElementById("project_location").value);
+    formData.append("timeframe", document.getElementById("timeframe").value);
+    formData.append("phone", document.getElementById("phone").value);
+    formData.append("email", document.getElementById("email").value);
+    formData.append("details", document.getElementById("details").value || "Sin detalles específicos");
+
+    // Enviar la petición a tu Drive
     fetch(GOOGLE_SCRIPT_URL, {
         method: "POST",
-        mode: "no-cors", // Permite el envío seguro cruzado de datos
-        cache: "no-cache",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(newLead)
+        body: formData,
+        mode: "no-cors"
     })
     .then(() => {
-        alert(`¡Éxito Comercial!\n\nEl prospecto "${newLead.name}" se ha registrado directamente en la Base de Datos real de Kuatro Modulares en Google Drive.`);
+        alert("¡Éxito Comercial!\n\nEl prospecto se ha registrado directamente en la Base de Datos real de Kuatro Modulares en Google Drive.");
         
-        // Reset del formulario
+        // Resetear el formulario interactivo
         document.getElementById("prospect-form").reset();
         currentStep = 1;
         showStep(1);
@@ -537,13 +532,14 @@
     })
     .catch(error => {
         console.error("Error:", error);
-        alert("Hubo un problema al conectar con Google Sheets. Inténtalo de nuevo.");
+        alert("Hubo un problema al conectar con Google Sheets.");
     })
     .finally(() => {
         submitBtn.innerHTML = originalText;
         submitBtn.disabled = false;
     });
-        }
+}
+
 
         // Renderizado de tabla de prospectos
         function renderTable() {
