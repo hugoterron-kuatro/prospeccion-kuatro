@@ -41,9 +41,6 @@
                 <button onclick="switchTab('form-tab')" id="btn-form-tab" class="px-4 py-2 text-sm font-semibold rounded-lg transition-all duration-200 bg-orange-500 text-white shadow">
                     <i class="fa-solid fa-wpforms mr-2"></i>Formulario
                 </button>
-                <button onclick="switchTab('script-tab')" id="btn-script-tab" class="px-4 py-2 text-sm font-semibold rounded-lg transition-all duration-200 text-slate-300 hover:text-white">
-                    <i class="fa-solid fa-bolt mr-2"></i>Crear Google Forms (1 Clic)
-                </button>
                 <button onclick="switchTab('sheet-tab')" id="btn-sheet-tab" class="px-4 py-2 text-sm font-semibold rounded-lg transition-all duration-200 text-slate-300 hover:text-white">
                     <i class="fa-solid fa-table-list mr-2"></i>Base de Datos Activa
                 </button>
@@ -299,128 +296,7 @@
         </section>
 
         <!-- PESTAÑA 2: CÓDIGO GOOGLE APPS SCRIPT -->
-        <section id="script-tab" class="tab-content hidden">
-            <div class="bg-white rounded-2xl shadow-xl border border-slate-100 overflow-hidden">
-                <div class="bg-slate-900 text-white px-6 py-5 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-                    <div>
-                        <h2 class="text-xl font-bold">Generador Automático de Google Forms</h2>
-                        <p class="text-xs text-slate-400">Genera tu formulario y base de datos con un clic y sin escribir código</p>
-                    </div>
-                    <button onclick="copyCode()" class="bg-orange-500 hover:bg-orange-600 text-white font-bold text-xs px-4 py-2.5 rounded-lg transition-all flex items-center gap-2 self-start md:self-auto">
-                        <i id="copy-icon" class="fa-regular fa-copy"></i> <span id="copy-text">Copiar Código de Automatización</span>
-                    </button>
-                </div>
-                
-                <div class="p-6 md:p-8 grid grid-cols-1 lg:grid-cols-12 gap-8">
-                    <!-- Instrucciones de Uso -->
-                    <div class="lg:col-span-4 space-y-6">
-                        <h3 class="font-extrabold text-slate-900 text-lg border-b pb-2">🚀 ¿Cómo usar este código?</h3>
-                        <ol class="space-y-4 text-sm text-slate-600 list-decimal pl-4 font-semibold">
-                            <li>
-                                <span class="text-slate-800 block">Abre Google Drive:</span>
-                                Ve a <a href="https://drive.google.com" target="_blank" class="text-orange-500 underline font-bold">Google Drive</a> con tu cuenta de correo de la empresa.
-                            </li>
-                            <li>
-                                <span class="text-slate-800 block">Crea un Apps Script:</span>
-                                Haz clic en <span class="bg-slate-100 px-2 py-1 border rounded text-xs">Nuevo > Más > Google Apps Script</span>.
-                            </li>
-                            <li>
-                                <span class="text-slate-800 block">Pega el Código:</span>
-                                Borra el código de ejemplo que aparece por defecto y **pega el código de la derecha**.
-                            </li>
-                            <li>
-                                <span class="text-slate-800 block">Ejecuta la automatización:</span>
-                                Ponle de nombre "Creador de Formulario Kuatro" y haz clic en el botón <strong class="text-emerald-600">Ejecutar (Run)</strong>.
-                            </li>
-                            <li>
-                                <span class="text-slate-800 block">¡Listo!</span>
-                                Revisa tu bandeja de Drive. Verás el **Google Forms** creado con todas las opciones profesionales y un **Google Sheets** conectado como base de datos.
-                            </li>
-                        </ol>
-                        
-                        <div class="bg-orange-50 border border-orange-200 p-4 rounded-xl text-orange-800 text-xs leading-relaxed">
-                            <strong class="block mb-1"><i class="fa-solid fa-circle-exclamation mr-1"></i>Nota sobre Permisos:</strong>
-                            Google te pedirá autorizar el script para crear archivos en tu Drive. Es un proceso de seguridad totalmente seguro y estándar de Google Workspace.
-                        </div>
-                    </div>
-
-                    <!-- Editor de Código Falso / Visor de Script -->
-                    <div class="lg:col-span-8 flex flex-col h-full border border-slate-200 rounded-xl overflow-hidden shadow-inner">
-                        <div class="bg-slate-850 px-4 py-2 bg-slate-800 text-slate-400 text-xs flex justify-between items-center">
-                            <span>crearFormularioKuatro.gs</span>
-                            <span class="text-emerald-500 font-bold">● Editor de Google Apps Script</span>
-                        </div>
-                        <pre class="bg-slate-900 text-emerald-400 p-5 font-mono text-xs overflow-x-auto leading-relaxed h-[420px]" id="code-snippet"><code>function crearFormularioKuatro() {
-  // 1. Inicialización y Nombre del Formulario Oficial de Kuatro Modulares
-  var form = FormApp.create('Prospectos - Kuatro Modulares');
-  form.setDescription('Formulario corporativo de prospección y calificación para soluciones de espacios móviles Kuatro Modulares.');
-  
-  // 2. Sección de Contacto General
-  form.addTextItem().setTitle('Nombre Completo').setRequired(true);
-  form.addTextItem().setTitle('Empresa / Razón Social').setRequired(false);
-  form.addTextItem().setTitle('Correo Electrónico').setRequired(true);
-  form.addTextItem().setTitle('Teléfono / WhatsApp').setRequired(true);
-  
-  // 3. Selección Inteligente de Producto Especializado
-  var itemProd = form.addMultipleChoiceItem();
-  itemProd.setTitle('Línea de Espacio Modular Requerido')
-          .setChoices([
-             itemProd.createChoice('Movilx® (Casetas móviles prácticas y listas para operar)'),
-             itemProd.createChoice('Flexpace® (Contenedores arquitectónicos de alto diseño)'),
-             itemProd.createChoice('Reubic® (Edificios modulares interconectables industriales)')
-          ])
-          .setRequired(true);
-
-  // 4. Calificación de sector e intenciones de adquisición
-  var itemSector = form.addMultipleChoiceItem();
-  itemSector.setTitle('Uso o Sector Destinado')
-            .setChoices([
-               itemSector.createChoice('Construcción / Obra'),
-               itemSector.createChoice('Oficinas corporativas'),
-               itemSector.createChoice('Salud (Clínica, Laboratorio)'),
-               itemSector.createChoice('Minería y Exploración'),
-               itemSector.createChoice('Industrial / Bodega')
-            ]);
-            
-  // 5. Esquemas comerciales de financiamiento y compra
-  var itemAdq = form.addMultipleChoiceItem();
-  itemAdq.setTitle('Opción de Adquisición Evaluada')
-         .setChoices([
-            itemAdq.createChoice('Venta Directa'),
-            itemAdq.createChoice('Renta o Arrendamiento Mensual'),
-            itemAdq.createChoice('Financiamiento a Medida'),
-            itemAdq.createChoice('Leasing (Arrendamiento Financiero)')
-         ])
-         .setRequired(true);
-
-  // 6. Ubicación y Temporalidad de Entrega
-  form.addTextItem().setTitle('Ubicación Física del Proyecto (Ciudad/Estado)').setRequired(true);
-  
-  var itemPlazo = form.addMultipleChoiceItem();
-  itemPlazo.setTitle('Urgencia de Entrega / Fecha Estimada de Uso')
-           .setChoices([
-              itemPlazo.createChoice('Inmediata (Menos de 15 días)'),
-              itemPlazo.createChoice('Próximos 30 días'),
-              itemPlazo.createChoice('De 2 a 3 meses'),
-              itemPlazo.createChoice('Solo Cotización / Planeación Futura')
-           ])
-           .setRequired(true);
-           
-  // 7. Notas y Equipamiento
-  form.addParagraphTextItem().setTitle('Comentarios, Dimensiones and Requerimientos de Equipamiento');
-  
-  // 8. Creación del Google Sheet Vinculado para Alimentar la Base de Datos
-  var ss = SpreadsheetApp.create('Base de Datos de Prospectos - Kuatro Modulares');
-  form.setDestination(FormApp.DestinationType.SPREADSHEET, ss.getId());
-  
-  Logger.log('¡Éxito! Formulario Creado.');
-  Logger.log('URL de edición del formulario: ' + form.getEditUrl());
-  Logger.log('URL de la base de datos de Google Sheets: ' + ss.getUrl());
-}</code></pre>
-                    </div>
-                </div>
-            </div>
-        </section>
+       
 
         <!-- PESTAÑA 3: MONITOR DE BASE DE DATOS (MOCK SHEETS) -->
         <section id="sheet-tab" class="tab-content hidden">
@@ -547,7 +423,7 @@
             document.getElementById(tabId).classList.remove('hidden');
 
             // Resetear estilos de botones de navegación
-            const tabs = ['form-tab', 'script-tab', 'sheet-tab'];
+            const tabs = ['form-tab', 'sheet-tab'];
             tabs.forEach(tab => {
                 const btn = document.getElementById(`btn-${tab}`);
                 if (tab === tabId) {
@@ -654,42 +530,59 @@
         }
 
         // Envío del Formulario
-        function handleFormSubmit(event) {
-            event.preventDefault();
+                    function handleFormSubmit(event) {
+    event.preventDefault();
 
-            // Recolectar datos
-            const now = new Date();
-            const timestamp = now.toLocaleDateString() + " " + now.toLocaleTimeString();
-            
-            const newLead = {
-                timestamp: timestamp,
-                name: document.getElementById("full_name").value,
-                company: document.getElementById("company_name").value || "N/A",
-                product: document.querySelector('input[name="product_line"]:checked').value,
-                acquisition: document.querySelector('input[name="acquisition_type"]:checked').value,
-                location: document.getElementById("project_location").value,
-                timeframe: document.getElementById("timeframe").value,
-                phone: document.getElementById("phone").value,
-                email: document.getElementById("email").value,
-                details: document.getElementById("details").value || "Sin detalles específicos",
-                status: "Nuevo"
-            };
+    // PEGA AQUÍ ENTRE LAS COMILLAS TU URL DE GOOGLE APPS SCRIPT QUE COPIASTE EN EL PASO 2
+    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwTeBkBkAXhnNZ6S9_5RHkk_LaHdlIrVtUFbAg3WJFdo1WrdRmVigm680BHAkOn6e8/exec";
 
-            // Guardar e informar
-            prospectos.unshift(newLead);
-            renderTable();
-            
-            alert(`¡Prospecto "${newLead.name}" guardado con éxito!\n\nLos datos se han registrado y calificado en la base de datos simulada en la pestaña 'Base de Datos Activa'.`);
-            
-            // Reset y volver a empezar
-            document.getElementById("prospect-form").reset();
-            currentStep = 1;
-            showStep(1);
-            highlightSelection();
-            highlightAcqSelection();
-            
-            // Mostrar la pestaña de Base de Datos
-            switchTab('sheet-tab');
+    // Recolectar datos de los campos de Kuatro
+    const newLead = {
+        name: document.getElementById("full_name").value,
+        company: document.getElementById("company_name").value || "N/A",
+        product: document.querySelector('input[name="product_line"]:checked').value,
+        acquisition: document.querySelector('input[name="acquisition_type"]:checked').value,
+        location: document.getElementById("project_location").value,
+        timeframe: document.getElementById("timeframe").value,
+        phone: document.getElementById("phone").value,
+        email: document.getElementById("email").value,
+        details: document.getElementById("details").value || "Sin detalles específicos"
+    };
+
+    // Cambiar texto del botón para mostrar que se está guardando
+    const submitBtn = document.getElementById("submit-btn");
+    const originalText = submitBtn.innerHTML;
+    submitBtn.innerHTML = "Guardando en la Nube... <i class='fa-solid fa-spinner animate-spin ml-2'></i>";
+    submitBtn.disabled = true;
+
+    // Enviar datos reales a tu Google Sheets mediante la API
+    fetch(GOOGLE_SCRIPT_URL, {
+        method: "POST",
+        mode: "no-cors", // Permite el envío seguro cruzado de datos
+        cache: "no-cache",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(newLead)
+    })
+    .then(() => {
+        alert(`¡Éxito Comercial!\n\nEl prospecto "${newLead.name}" se ha registrado directamente en la Base de Datos real de Kuatro Modulares en Google Drive.`);
+        
+        // Reset del formulario
+        document.getElementById("prospect-form").reset();
+        currentStep = 1;
+        showStep(1);
+        highlightSelection();
+        highlightAcqSelection();
+    })
+    .catch(error => {
+        console.error("Error:", error);
+        alert("Hubo un problema al conectar con Google Sheets. Inténtalo de nuevo.");
+    })
+    .finally(() => {
+        submitBtn.innerHTML = originalText;
+        submitBtn.disabled = false;
+    });
         }
 
         // Renderizado de tabla de prospectos
