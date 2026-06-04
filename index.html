@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kuatro Modulares - Sistema de Prospección Inteligente</title>
+    <!-- Tailwind CSS para un diseño moderno y responsivo -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Iconos de FontAwesome para representar los productos y opciones de adquisición -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght=300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Urbanist', sans-serif;
+        }
+        .step-transition {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+    </style>
+</head>
+<body class="bg-slate-50 min-height-screen flex flex-col justify-between text-slate-800">
+
+    <!-- HEADER / BRANDING -->
+    <header class="bg-slate-900 text-white shadow-md border-b-4 border-orange-500 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <!-- LOGO CORPORATIVO DE KUATRO MODULARES -->
+                <div class="w-16 h-16 bg-white rounded-xl flex items-center justify-center p-1 shadow-inner overflow-hidden">
+                    <img src="https://www.kuatro.com.mx/assets/globales/img/kuatro-logo-dark.png" alt="Logo Kuatro Modulares" class="object-contain w-full h-full">
+                </div>
+                <div>
+                    <h1 class="text-xl font-extrabold tracking-tight">KUATRO <span class="text-orange-500">MODULARES</span></h1>
+                     </div>
+            </div>
+            
+            <!-- NAVEGACIÓN DE PESTAÑAS -->
+            <nav class="flex space-x-1 bg-slate-800 p-1 rounded-xl border border-slate-700">
+                <button onclick="switchTab('form-tab')" id="btn-form-tab" class="px-4 py-2 text-sm font-semibold rounded-lg transition-all duration-200 bg-orange-500 text-white shadow">
+                    <i class="fa-solid fa-wpforms mr-2"></i>Formulario
+                </button>
+                <button onclick="switchTab('script-tab')" id="btn-script-tab" class="px-4 py-2 text-sm font-semibold rounded-lg transition-all duration-200 text-slate-300 hover:text-white">
+                    <i class="fa-solid fa-bolt mr-2"></i>Crear Google Forms (1 Clic)
+                </button>
+                <button onclick="switchTab('sheet-tab')" id="btn-sheet-tab" class="px-4 py-2 text-sm font-semibold rounded-lg transition-all duration-200 text-slate-300 hover:text-white">
+                    <i class="fa-solid fa-table-list mr-2"></i>Base de Datos Activa
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT CONTAINER -->
+    <main class="max-w-7xl w-full mx-auto px-4 py-8 flex-grow">
+        
+        <!-- PESTAÑA 1: FORMULARIO INTERACTIVO -->
+        <section id="form-tab" class="tab-content block">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                
+                <!-- Columna Izquierda: El Formulario Calificador -->
+                <div class="lg:col-span-8 bg-white rounded-2xl shadow-xl border border-slate-100 overflow-hidden">
+                    <div class="bg-slate-900 text-white px-6 py-4 flex justify-between items-center">
+                        <div>
+                            <h2 class="text-lg font-bold">Ficha de Prospección Comercial</h2>
+                            <p class="text-xs text-slate-400">Identifica y califica la necesidad de espacio modular</p>
+                        </div>
+                        <span id="step-indicator" class="bg-slate-800 border border-slate-700 text-orange-400 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
+                            Paso 1 de 3: Datos de Contacto
+                        </span>
+                    </div>
+
+                    <!-- Progreso Visual -->
+                    <div class="w-full bg-slate-200 h-1.5">
+                        <div id="progress-bar" class="bg-orange-500 h-1.5 transition-all duration-500" style="width: 33.33%"></div>
+                    </div>
+
+                    <form id="prospect-form" onsubmit="handleFormSubmit(event)" class="p-6 sm:p-8 space-y-6">
+                        
+                        <!-- PASO 1: CONTACTO -->
+                        <div id="step-1" class="step-transition space-y-6">
+                            <div class="border-b border-slate-100 pb-3">
+                                <h3 class="text-lg font-bold text-slate-900"><i class="fa-solid fa-user-tie text-orange-500 mr-2"></i>Información General de Contacto</h3>
+                                <p class="text-sm text-slate-500">¿Quién solicita el espacio móvil y a qué empresa representa?</p>
+                            </div>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-sm font-bold text-slate-700 mb-1.5">Nombre Completo *</label>
+                                    <input type="text" id="full_name" required placeholder="Ej: Ing. Carlos Mendoza" 
+                                           class="w-full rounded-xl border-slate-200 border p-3 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-bold text-slate-700 mb-1.5">Empresa / Razón Social</label>
+                                    <input type="text" id="company_name" placeholder="Ej: Constructora del Norte S.A." 
+                                           class="w-full rounded-xl border-slate-200 border p-3 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-bold text-slate-700 mb-1.5">Correo Electrónico *</label>
+                                    <input type="email" id="email" required placeholder="carlos@empresa.com" 
+                                           class="w-full rounded-xl border-slate-200 border p-3 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-bold text-slate-700 mb-1.5">Teléfono / WhatsApp *</label>
+                                    <input type="tel" id="phone" required placeholder="Ej: 81 1234 5678" 
+                                           class="w-full rounded-xl border-slate-200 border p-3 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- PASO 2: SELECCIÓN DE ESPACIO -->
+                        <div id="step-2" class="step-transition hidden space-y-6">
+                            <div class="border-b border-slate-100 pb-3">
+                                <h3 class="text-lg font-bold text-slate-900"><i class="fa-solid fa-cubes text-orange-500 mr-2"></i>Especificación del Espacio Requerido</h3>
+                                <p class="text-sm text-slate-500">Selecciona el tipo de solución modular que mejor se adapte al proyecto</p>
+                            </div>
+                            
+                            <!-- Tarjetas de Selección de Producto -->
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                <label class="border-2 border-slate-200 hover:border-orange-500 rounded-2xl p-4 cursor-pointer flex flex-col justify-between h-full transition-all hover:bg-slate-50 relative group" id="label-movilx">
+                                    <input type="radio" name="product_line" value="Movilx®" required class="absolute top-4 right-4 text-orange-500 focus:ring-orange-500 h-4 w-4" onchange="highlightSelection()">
+                                    <div>
+                                        <div class="h-12 w-12 rounded-xl bg-orange-100 text-orange-600 flex items-center justify-center text-xl mb-3 group-hover:scale-110 transition-transform">
+                                            <i class="fa-solid fa-truck"></i>
+                                        </div>
+                                        <span class="block font-extrabold text-slate-950 text-base">Movilx®</span>
+                                        <span class="block text-xs font-bold text-orange-600 tracking-wider uppercase mb-1.5">Casetas Móviles</span>
+                                        <p class="text-xs text-slate-500 leading-relaxed">Prácticas, listas para usarse, versátiles e instalación inmediata en sitio u obra.</p>
+                                    </div>
+                                </label>
+                                
+                                <label class="border-2 border-slate-200 hover:border-orange-500 rounded-2xl p-4 cursor-pointer flex flex-col justify-between h-full transition-all hover:bg-slate-50 relative group" id="label-flexpace">
+                                    <input type="radio" name="product_line" value="Flexpace®" class="absolute top-4 right-4 text-orange-500 focus:ring-orange-500 h-4 w-4" onchange="highlightSelection()">
+                                    <div>
+                                        <div class="h-12 w-12 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center text-xl mb-3 group-hover:scale-110 transition-transform">
+                                            <i class="fa-solid fa-box"></i>
+                                        </div>
+                                        <span class="block font-extrabold text-slate-950 text-base">Flexpace®</span>
+                                        <span class="block text-xs font-bold text-blue-600 tracking-wider uppercase mb-1.5">Contenedor Arq.</span>
+                                        <p class="text-xs text-slate-500 leading-relaxed">Espacios modulares rápidos, de diseño estético, flexibles y listos para operar con gran imagen.</p>
+                                    </div>
+                                </label>
+                                
+                                <label class="border-2 border-slate-200 hover:border-orange-500 rounded-2xl p-4 cursor-pointer flex flex-col justify-between h-full transition-all hover:bg-slate-50 relative group" id="label-reubic">
+                                    <input type="radio" name="product_line" value="Reubic®" class="absolute top-4 right-4 text-orange-500 focus:ring-orange-500 h-4 w-4" onchange="highlightSelection()">
+                                    <div>
+                                        <div class="h-12 w-12 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center text-xl mb-3 group-hover:scale-110 transition-transform">
+                                            <i class="fa-solid fa-building"></i>
+                                        </div>
+                                        <span class="block font-extrabold text-slate-950 text-base">Reubic®</span>
+                                        <span class="block text-xs font-bold text-emerald-600 tracking-wider uppercase mb-1.5">Edificios Modulares</span>
+                                        <p class="text-xs text-slate-500 leading-relaxed">Módulos reubicables, interconectables e ideales para requerimientos industriales robustos.</p>
+                                    </div>
+                                </label>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
+                                <div>
+                                    <label class="block text-sm font-bold text-slate-700 mb-1.5">Uso o Sector Destinado</label>
+                                    <select id="sector" class="w-full rounded-xl border-slate-200 border p-3 bg-white focus:ring-2 focus:ring-orange-500 focus:outline-none transition-all">
+                                        <option value="Construcción">Construcción / Obra</option>
+                                        <option value="Oficinas corporativas">Oficinas Corporativas / Comerciales</option>
+                                        <option value="Salud">Sector Salud (Clínicas, Consultorios)</option>
+                                        <option value="Minería">Minería y Exploración</option>
+                                        <option value="Industrial">Planta / Almacenamiento Industrial</option>
+                                        <option value="Otro">Otro sector</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-bold text-slate-700 mb-1.5">Cantidad de Espacios Necesarios</label>
+                                    <input type="number" id="quantity" min="1" value="1" 
+                                           class="w-full rounded-xl border-slate-200 border p-3 focus:ring-2 focus:ring-orange-500 focus:outline-none transition-all">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- PASO 3: ESQUEMA Y DETALLES -->
+                        <div id="step-3" class="step-transition hidden space-y-6">
+                            <div class="border-b border-slate-100 pb-3">
+                                <h3 class="text-lg font-bold text-slate-900"><i class="fa-solid fa-handshake text-orange-500 mr-2"></i>Esquema Comercial y Ubicación</h3>
+                                <p class="text-sm text-slate-500">¿Bajo qué términos de adquisición se plantea la transacción?</p>
+                            </div>
+                            
+                            <!-- Esquemas de Adquisición -->
+                            <div>
+                                <label class="block text-sm font-bold text-slate-700 mb-2.5">Opciones de Adquisición Requerida *</label>
+                                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                                    <label class="border rounded-xl p-3 flex items-center gap-2 cursor-pointer hover:bg-slate-50 border-slate-200 transition-all text-sm font-semibold" id="label-venta">
+                                        <input type="radio" name="acquisition_type" value="Venta" required class="text-orange-500 focus:ring-orange-500" onchange="highlightAcqSelection()">
+                                        Venta Directa
+                                    </label>
+                                    <label class="border rounded-xl p-3 flex items-center gap-2 cursor-pointer hover:bg-slate-50 border-slate-200 transition-all text-sm font-semibold" id="label-renta">
+                                        <input type="radio" name="acquisition_type" value="Renta" class="text-orange-500 focus:ring-orange-500" onchange="highlightAcqSelection()">
+                                        Renta Mensual
+                                    </label>
+                                    <label class="border rounded-xl p-3 flex items-center gap-2 cursor-pointer hover:bg-slate-50 border-slate-200 transition-all text-sm font-semibold" id="label-fin">
+                                        <input type="radio" name="acquisition_type" value="Financiamiento" class="text-orange-500 focus:ring-orange-500" onchange="highlightAcqSelection()">
+                                        Financiamiento
+                                    </label>
+                                    <label class="border rounded-xl p-3 flex items-center gap-2 cursor-pointer hover:bg-slate-50 border-slate-200 transition-all text-sm font-semibold" id="label-leasing">
+                                        <input type="radio" name="acquisition_type" value="Leasing" class="text-orange-500 focus:ring-orange-500" onchange="highlightAcqSelection()">
+                                        Leasing
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-sm font-bold text-slate-700 mb-1.5">Ubicación del Proyecto (Ciudad / Estado) *</label>
+                                    <input type="text" id="project_location" required placeholder="Ej: Monterrey, N.L." 
+                                           class="w-full rounded-xl border-slate-200 border p-3 focus:outline-none focus:ring-2 focus:ring-orange-500 transition-all">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-bold text-slate-700 mb-1.5">Urgencia / Fecha Estimada de Uso</label>
+                                    <select id="timeframe" class="w-full rounded-xl border-slate-200 border p-3 bg-white focus:ring-2 focus:ring-orange-500 focus:outline-none transition-all">
+                                        <option value="Inmediata">Inmediata (Menos de 15 días)</option>
+                                        <option value="Próximos 30 días">Próximos 30 días</option>
+                                        <option value="De 2 a 3 meses">En un plazo de 2 a 3 meses</option>
+                                        <option value="Solo Cotización">Solo cotizando para presupuesto futuro</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-bold text-slate-700 mb-1.5">Comentarios y Requerimientos Adicionales (Opcional)</label>
+                                <textarea id="details" rows="3" placeholder="Detalla dimensiones requeridas, equipamiento eléctrico, mobiliario, etc." 
+                                          class="w-full rounded-xl border-slate-200 border p-3 focus:ring-2 focus:ring-orange-500 focus:outline-none transition-all"></textarea>
+                                <p class="text-xs text-slate-400 mt-1">Escribe cualquier particularidad del terreno o requerimientos de entrega.</p>
+                            </div>
+                        </div>
+
+                        <!-- CONTROLES DE NAVEGACIÓN -->
+                        <div class="flex justify-between items-center pt-4 border-t border-slate-100">
+                            <button type="button" id="prev-btn" onclick="nextPrev(-1)" class="hidden text-sm font-bold text-slate-600 hover:text-slate-900 bg-slate-100 hover:bg-slate-200 px-5 py-3 rounded-xl transition-all">
+                                <i class="fa-solid fa-arrow-left mr-2"></i>Anterior
+                            </button>
+                            <span class="flex-grow"></span>
+                            <button type="button" id="next-btn" onclick="nextPrev(1)" class="bg-slate-900 hover:bg-slate-800 text-white text-sm font-bold px-6 py-3 rounded-xl transition-all shadow-md">
+                                Siguiente <i class="fa-solid fa-arrow-right ml-2 text-orange-500"></i>
+                            </button>
+                            <button type="submit" id="submit-btn" class="hidden bg-orange-500 hover:bg-orange-600 text-white text-sm font-bold px-6 py-3 rounded-xl transition-all shadow-md shadow-orange-100">
+                                Guardar Prospecto <i class="fa-solid fa-cloud-arrow-up ml-2"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Columna Derecha: Tarjetas informativas de Kuatro -->
+                <div class="lg:col-span-4 space-y-6">
+                    <div class="bg-gradient-to-br from-slate-900 to-slate-800 text-white p-6 rounded-2xl shadow-xl border border-slate-700 relative overflow-hidden">
+                        <div class="absolute -right-8 -bottom-8 opacity-10 text-9xl">
+                            <i class="fa-solid fa-building-circle-check"></i>
+                        </div>
+                        <h3 class="text-lg font-bold mb-3 border-b border-slate-700 pb-2 flex items-center justify-between">
+                            <span>Soluciones Kuatro</span>
+                            <span class="text-orange-500 text-xs uppercase tracking-wider font-extrabold bg-slate-800 px-2 py-1 rounded">2026</span>
+                        </h3>
+                        <ul class="space-y-4 text-sm text-slate-300">
+                            <li class="flex gap-2 items-start">
+                                <i class="fa-solid fa-circle-check text-orange-500 mt-1"></i>
+                                <div>
+                                    <strong class="text-white block">Flexibilidad Financiera</strong>
+                                    Diseñamos cotizaciones integrales combinando Renta con opción a compra, arrendamientos puros (Leasing) y planes de amortización.
+                                </div>
+                            </li>
+                            <li class="flex gap-2 items-start">
+                                <i class="fa-solid fa-circle-check text-orange-500 mt-1"></i>
+                                <div>
+                                    <strong class="text-white block">Velocidad de Entrega</strong>
+                                    Instalación de espacios móviles funcionales en días, no en meses. Listos para operar de inmediato.
+                                </div>
+                            </li>
+                            <li class="flex gap-2 items-start">
+                                <i class="fa-solid fa-circle-check text-orange-500 mt-1"></i>
+                                <div>
+                                    <strong class="text-white block">Soporte y Logística integral</strong>
+                                    Nos encargamos de las maniobras, traslado a nivel nacional e instalaciones de servicios y mobiliario complementario.
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Cuadro informativo del estado de conexión -->
+                    <div class="bg-slate-100 border border-slate-200 p-5 rounded-2xl text-slate-600 text-sm">
+                        <h4 class="font-bold text-slate-800 mb-2"><i class="fa-solid fa-circle-nodes text-slate-500 mr-2"></i>Conexión con tu Base de Datos</h4>
+                        <p class="mb-3 text-xs leading-relaxed">
+                            Este formulario está preconfigurado para integrarse con tu Google Sheet. Cada prospecto registrado alimentará automáticamente tu reporte de ventas en tiempo real.
+                        </p>
+                        <div class="bg-white p-3 rounded-lg border flex items-center justify-between shadow-sm">
+                            <div class="flex items-center gap-2">
+                                <span class="h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                                <span class="text-xs font-bold text-emerald-600">Simulador Conectado</span>
+                            </div>
+                            <button onclick="switchTab('sheet-tab')" class="text-xs font-bold text-orange-500 hover:underline">Ver Base →</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PESTAÑA 2: CÓDIGO GOOGLE APPS SCRIPT -->
+        <section id="script-tab" class="tab-content hidden">
+            <div class="bg-white rounded-2xl shadow-xl border border-slate-100 overflow-hidden">
+                <div class="bg-slate-900 text-white px-6 py-5 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                    <div>
+                        <h2 class="text-xl font-bold">Generador Automático de Google Forms</h2>
+                        <p class="text-xs text-slate-400">Genera tu formulario y base de datos con un clic y sin escribir código</p>
+                    </div>
+                    <button onclick="copyCode()" class="bg-orange-500 hover:bg-orange-600 text-white font-bold text-xs px-4 py-2.5 rounded-lg transition-all flex items-center gap-2 self-start md:self-auto">
+                        <i id="copy-icon" class="fa-regular fa-copy"></i> <span id="copy-text">Copiar Código de Automatización</span>
+                    </button>
+                </div>
+                
+                <div class="p-6 md:p-8 grid grid-cols-1 lg:grid-cols-12 gap-8">
+                    <!-- Instrucciones de Uso -->
+                    <div class="lg:col-span-4 space-y-6">
+                        <h3 class="font-extrabold text-slate-900 text-lg border-b pb-2">🚀 ¿Cómo usar este código?</h3>
+                        <ol class="space-y-4 text-sm text-slate-600 list-decimal pl-4 font-semibold">
+                            <li>
+                                <span class="text-slate-800 block">Abre Google Drive:</span>
+                                Ve a <a href="https://drive.google.com" target="_blank" class="text-orange-500 underline font-bold">Google Drive</a> con tu cuenta de correo de la empresa.
+                            </li>
+                            <li>
+                                <span class="text-slate-800 block">Crea un Apps Script:</span>
+                                Haz clic en <span class="bg-slate-100 px-2 py-1 border rounded text-xs">Nuevo > Más > Google Apps Script</span>.
+                            </li>
+                            <li>
+                                <span class="text-slate-800 block">Pega el Código:</span>
+                                Borra el código de ejemplo que aparece por defecto y **pega el código de la derecha**.
+                            </li>
+                            <li>
+                                <span class="text-slate-800 block">Ejecuta la automatización:</span>
+                                Ponle de nombre "Creador de Formulario Kuatro" y haz clic en el botón <strong class="text-emerald-600">Ejecutar (Run)</strong>.
+                            </li>
+                            <li>
+                                <span class="text-slate-800 block">¡Listo!</span>
+                                Revisa tu bandeja de Drive. Verás el **Google Forms** creado con todas las opciones profesionales y un **Google Sheets** conectado como base de datos.
+                            </li>
+                        </ol>
+                        
+                        <div class="bg-orange-50 border border-orange-200 p-4 rounded-xl text-orange-800 text-xs leading-relaxed">
+                            <strong class="block mb-1"><i class="fa-solid fa-circle-exclamation mr-1"></i>Nota sobre Permisos:</strong>
+                            Google te pedirá autorizar el script para crear archivos en tu Drive. Es un proceso de seguridad totalmente seguro y estándar de Google Workspace.
+                        </div>
+                    </div>
+
+                    <!-- Editor de Código Falso / Visor de Script -->
+                    <div class="lg:col-span-8 flex flex-col h-full border border-slate-200 rounded-xl overflow-hidden shadow-inner">
+                        <div class="bg-slate-850 px-4 py-2 bg-slate-800 text-slate-400 text-xs flex justify-between items-center">
+                            <span>crearFormularioKuatro.gs</span>
+                            <span class="text-emerald-500 font-bold">● Editor de Google Apps Script</span>
+                        </div>
+                        <pre class="bg-slate-900 text-emerald-400 p-5 font-mono text-xs overflow-x-auto leading-relaxed h-[420px]" id="code-snippet"><code>function crearFormularioKuatro() {
+  // 1. Inicialización y Nombre del Formulario Oficial de Kuatro Modulares
+  var form = FormApp.create('Prospectos - Kuatro Modulares');
+  form.setDescription('Formulario corporativo de prospección y calificación para soluciones de espacios móviles Kuatro Modulares.');
+  
+  // 2. Sección de Contacto General
+  form.addTextItem().setTitle('Nombre Completo').setRequired(true);
+  form.addTextItem().setTitle('Empresa / Razón Social').setRequired(false);
+  form.addTextItem().setTitle('Correo Electrónico').setRequired(true);
+  form.addTextItem().setTitle('Teléfono / WhatsApp').setRequired(true);
+  
+  // 3. Selección Inteligente de Producto Especializado
+  var itemProd = form.addMultipleChoiceItem();
+  itemProd.setTitle('Línea de Espacio Modular Requerido')
+          .setChoices([
+             itemProd.createChoice('Movilx® (Casetas móviles prácticas y listas para operar)'),
+             itemProd.createChoice('Flexpace® (Contenedores arquitectónicos de alto diseño)'),
+             itemProd.createChoice('Reubic® (Edificios modulares interconectables industriales)')
+          ])
+          .setRequired(true);
+
+  // 4. Calificación de sector e intenciones de adquisición
+  var itemSector = form.addMultipleChoiceItem();
+  itemSector.setTitle('Uso o Sector Destinado')
+            .setChoices([
+               itemSector.createChoice('Construcción / Obra'),
+               itemSector.createChoice('Oficinas corporativas'),
+               itemSector.createChoice('Salud (Clínica, Laboratorio)'),
+               itemSector.createChoice('Minería y Exploración'),
+               itemSector.createChoice('Industrial / Bodega')
+            ]);
+            
+  // 5. Esquemas comerciales de financiamiento y compra
+  var itemAdq = form.addMultipleChoiceItem();
+  itemAdq.setTitle('Opción de Adquisición Evaluada')
+         .setChoices([
+            itemAdq.createChoice('Venta Directa'),
+            itemAdq.createChoice('Renta o Arrendamiento Mensual'),
+            itemAdq.createChoice('Financiamiento a Medida'),
+            itemAdq.createChoice('Leasing (Arrendamiento Financiero)')
+         ])
+         .setRequired(true);
+
+  // 6. Ubicación y Temporalidad de Entrega
+  form.addTextItem().setTitle('Ubicación Física del Proyecto (Ciudad/Estado)').setRequired(true);
+  
+  var itemPlazo = form.addMultipleChoiceItem();
+  itemPlazo.setTitle('Urgencia de Entrega / Fecha Estimada de Uso')
+           .setChoices([
+              itemPlazo.createChoice('Inmediata (Menos de 15 días)'),
+              itemPlazo.createChoice('Próximos 30 días'),
+              itemPlazo.createChoice('De 2 a 3 meses'),
+              itemPlazo.createChoice('Solo Cotización / Planeación Futura')
+           ])
+           .setRequired(true);
+           
+  // 7. Notas y Equipamiento
+  form.addParagraphTextItem().setTitle('Comentarios, Dimensiones and Requerimientos de Equipamiento');
+  
+  // 8. Creación del Google Sheet Vinculado para Alimentar la Base de Datos
+  var ss = SpreadsheetApp.create('Base de Datos de Prospectos - Kuatro Modulares');
+  form.setDestination(FormApp.DestinationType.SPREADSHEET, ss.getId());
+  
+  Logger.log('¡Éxito! Formulario Creado.');
+  Logger.log('URL de edición del formulario: ' + form.getEditUrl());
+  Logger.log('URL de la base de datos de Google Sheets: ' + ss.getUrl());
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PESTAÑA 3: MONITOR DE BASE DE DATOS (MOCK SHEETS) -->
+        <section id="sheet-tab" class="tab-content hidden">
+            <div class="bg-white rounded-2xl shadow-xl border border-slate-100 overflow-hidden">
+                <div class="bg-slate-900 text-white px-6 py-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                    <div>
+                        <h2 class="text-xl font-bold flex items-center gap-2">
+                            <span>Base de Datos de Leads</span>
+                            <span class="bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs px-2.5 py-0.5 rounded-full font-bold">ACTIVA</span>
+                        </h2>
+                        <p class="text-xs text-slate-400">Panel administrativo interno de Kuatro Modulares (Simulación de Google Sheets)</p>
+                    </div>
+                    <div class="flex gap-2">
+                        <button onclick="cleanDatabase()" class="bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white font-bold text-xs px-3.5 py-2 rounded-lg transition-all border border-slate-700">
+                            <i class="fa-solid fa-trash mr-1.5"></i>Limpiar Datos
+                        </button>
+                        <button onclick="generateMockData()" class="bg-orange-500 hover:bg-orange-600 text-white font-bold text-xs px-4 py-2 rounded-lg transition-all shadow-md">
+                            <i class="fa-solid fa-plus-circle mr-1.5"></i>Simular Prospecto Nuevo
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Tabla Interactiva -->
+                <div class="p-6">
+                    <div class="overflow-x-auto border border-slate-200 rounded-xl shadow-inner">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="bg-slate-550 border-b border-slate-200 text-xs font-bold text-slate-500 uppercase tracking-wider bg-slate-50">
+                                    <th class="p-4">Marca Temporal</th>
+                                    <th class="p-4">Contacto</th>
+                                    <th class="p-4">Empresa</th>
+                                    <th class="p-4">Línea de Espacio</th>
+                                    <th class="p-4">Esquema</th>
+                                    <th class="p-4">Destino</th>
+                                    <th class="p-4">Plazo</th>
+                                    <th class="p-4">Estatus Interno</th>
+                                </tr>
+                            </thead>
+                            <tbody id="database-body" class="divide-y divide-slate-200 text-sm">
+                                <!-- Filas de prospectos simulados se insertarán aquí por JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="mt-4 flex flex-col sm:flex-row justify-between items-center gap-3 text-xs text-slate-500 font-semibold">
+                        <span>Cada nuevo registro enviado por el formulario aparecerá aquí instantáneamente.</span>
+                        <div class="flex gap-4">
+                            <span><strong class="text-orange-500">Formato de datos:</strong> Estructurado para exportación CRM</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-slate-900 text-slate-400 py-6 text-xs text-center border-t border-slate-800 mt-12">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4">
+            <p>&copy; 2026 Kuatro Modulares | Sistema de Prospección y Control de Datos.</p>
+            <div class="flex gap-4">
+                <a href="#" class="hover:text-white transition-colors">Aviso de Privacidad</a>
+                <span>|</span>
+                <a href="#" class="hover:text-white transition-colors">Términos del Servicio</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- LOGICA SCRIPT DE CONTROL -->
+    <script>
+        // Datos Mock iniciales
+        let prospectos = [
+            {
+                timestamp: "04/06/2026 10:15:30",
+                name: "Arq. Sofia Valdez",
+                company: "Desarrolladora Monterrey",
+                product: "Movilx®",
+                acquisition: "Renta",
+                location: "Apodaca, N.L.",
+                timeframe: "Inmediata",
+                phone: "8123984512",
+                email: "svaldez@desarrollos.com",
+                details: "Se requiere para caseta de supervisión de obra.",
+                status: "Nuevo"
+            },
+            {
+                timestamp: "04/06/2026 11:22:15",
+                name: "Lic. Fernando G.",
+                company: "Servicios Médicos del Bajío",
+                product: "Flexpace®",
+                acquisition: "Venta",
+                location: "Querétaro, Qro.",
+                timeframe: "Próximos 30 días",
+                phone: "4421253689",
+                email: "fgomez@smbajio.com",
+                details: "Módulo de atención de 6x3 metros con baño.",
+                status: "En Proceso"
+            },
+            {
+                timestamp: "04/06/2026 11:58:02",
+                name: "Ing. Jorge Treviño",
+                company: "Industrial Acero",
+                product: "Reubic®",
+                acquisition: "Leasing",
+                location: "Monclova, Coah.",
+                timeframe: "De 2 a 3 meses",
+                phone: "8661159823",
+                email: "jtrevino@steelind.com",
+                details: "Necesitamos interconectar 4 módulos para comedor de planta.",
+                status: "Cotizado"
+            }
+        ];
+
+        let currentStep = 1;
+
+        // Renderizar base de datos inicial
+        document.addEventListener("DOMContentLoaded", () => {
+            renderTable();
+            highlightSelection();
+            highlightAcqSelection();
+        });
+
+        // Cambio de pestañas
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.getElementById(tabId).classList.remove('hidden');
+
+            // Resetear estilos de botones de navegación
+            const tabs = ['form-tab', 'script-tab', 'sheet-tab'];
+            tabs.forEach(tab => {
+                const btn = document.getElementById(`btn-${tab}`);
+                if (tab === tabId) {
+                    btn.className = "px-4 py-2 text-sm font-semibold rounded-lg transition-all duration-200 bg-orange-500 text-white shadow";
+                } else {
+                    btn.className = "px-4 py-2 text-sm font-semibold rounded-lg transition-all duration-200 text-slate-300 hover:text-white";
+                }
+            });
+        }
+
+        // Control del Formulario Multipasos
+        function showStep(n) {
+            document.getElementById("step-1").classList.add("hidden");
+            document.getElementById("step-2").classList.add("hidden");
+            document.getElementById("step-3").classList.add("hidden");
+
+            document.getElementById(`step-${n}`).classList.remove("hidden");
+
+            // Configurar botones de control
+            if (n === 1) {
+                document.getElementById("prev-btn").classList.add("hidden");
+                document.getElementById("next-btn").classList.remove("hidden");
+                document.getElementById("submit-btn").classList.add("hidden");
+                document.getElementById("step-indicator").textContent = "Paso 1 de 3: Datos de Contacto";
+                document.getElementById("progress-bar").style.width = "33.33%";
+            } else if (n === 2) {
+                document.getElementById("prev-btn").classList.remove("hidden");
+                document.getElementById("next-btn").classList.remove("hidden");
+                document.getElementById("submit-btn").classList.add("hidden");
+                document.getElementById("step-indicator").textContent = "Paso 2 de 3: Elección de Espacio";
+                document.getElementById("progress-bar").style.width = "66.66%";
+            } else {
+                document.getElementById("prev-btn").classList.remove("hidden");
+                document.getElementById("next-btn").classList.add("hidden");
+                document.getElementById("submit-btn").classList.remove("hidden");
+                document.getElementById("step-indicator").textContent = "Paso 3 de 3: Adquisición";
+                document.getElementById("progress-bar").style.width = "100%";
+            }
+        }
+
+        function nextPrev(n) {
+            // Validar entradas antes de proceder
+            if (n === 1) {
+                if (currentStep === 1) {
+                    if (!document.getElementById("full_name").value || !document.getElementById("email").value || !document.getElementById("phone").value) {
+                        alert("Por favor llena los campos obligatorios de contacto.");
+                        return;
+                    }
+                }
+                if (currentStep === 2) {
+                    const productSelected = document.querySelector('input[name="product_line"]:checked');
+                    if (!productSelected) {
+                        alert("Por favor selecciona una de las tres líneas de espacio modular.");
+                        return;
+                    }
+                }
+            }
+
+            currentStep += n;
+            showStep(currentStep);
+        }
+
+        // Resaltar visualmente las selecciones de tarjetas de productos
+        function highlightSelection() {
+            const product = document.querySelector('input[name="product_line"]:checked');
+            const ids = ['movilx', 'flexpace', 'reubic'];
+            
+            ids.forEach(id => {
+                const card = document.getElementById(`label-${id}`);
+                card.classList.remove('border-orange-500', 'bg-orange-50/50', 'ring-2', 'ring-orange-500/20');
+                card.classList.add('border-slate-200');
+            });
+
+            if (product) {
+                const cleanValue = product.value.replace(/®/g, '').toLowerCase();
+                const selectedCard = document.getElementById(`label-${cleanValue}`);
+                if (selectedCard) {
+                    selectedCard.classList.remove('border-slate-200');
+                    selectedCard.classList.add('border-orange-500', 'bg-orange-50/50', 'ring-2', 'ring-orange-500/20');
+                }
+            }
+        }
+
+        // Resaltar visualmente las selecciones de adquisición
+        function highlightAcqSelection() {
+            const acq = document.querySelector('input[name="acquisition_type"]:checked');
+            const schemes = ['venta', 'renta', 'fin', 'leasing'];
+            
+            schemes.forEach(sc => {
+                const label = document.getElementById(`label-${sc}`);
+                label.classList.remove('border-orange-500', 'bg-orange-50/50', 'text-orange-950');
+                label.classList.add('border-slate-200');
+            });
+
+            if (acq) {
+                let idMatch = acq.value.toLowerCase();
+                if (idMatch === 'financiamiento') idMatch = 'fin';
+                const selectedLabel = document.getElementById(`label-${idMatch}`);
+                if (selectedLabel) {
+                    selectedLabel.classList.remove('border-slate-200');
+                    selectedLabel.classList.add('border-orange-500', 'bg-orange-50/50', 'text-orange-950');
+                }
+            }
+        }
+
+        // Envío del Formulario
+        function handleFormSubmit(event) {
+            event.preventDefault();
+
+            // Recolectar datos
+            const now = new Date();
+            const timestamp = now.toLocaleDateString() + " " + now.toLocaleTimeString();
+            
+            const newLead = {
+                timestamp: timestamp,
+                name: document.getElementById("full_name").value,
+                company: document.getElementById("company_name").value || "N/A",
+                product: document.querySelector('input[name="product_line"]:checked').value,
+                acquisition: document.querySelector('input[name="acquisition_type"]:checked').value,
+                location: document.getElementById("project_location").value,
+                timeframe: document.getElementById("timeframe").value,
+                phone: document.getElementById("phone").value,
+                email: document.getElementById("email").value,
+                details: document.getElementById("details").value || "Sin detalles específicos",
+                status: "Nuevo"
+            };
+
+            // Guardar e informar
+            prospectos.unshift(newLead);
+            renderTable();
+            
+            alert(`¡Prospecto "${newLead.name}" guardado con éxito!\n\nLos datos se han registrado y calificado en la base de datos simulada en la pestaña 'Base de Datos Activa'.`);
+            
+            // Reset y volver a empezar
+            document.getElementById("prospect-form").reset();
+            currentStep = 1;
+            showStep(1);
+            highlightSelection();
+            highlightAcqSelection();
+            
+            // Mostrar la pestaña de Base de Datos
+            switchTab('sheet-tab');
+        }
+
+        // Renderizado de tabla de prospectos
+        function renderTable() {
+            const tbody = document.getElementById("database-body");
+            tbody.innerHTML = "";
+
+            prospectos.forEach(pr => {
+                let badgeColor = "bg-orange-100 text-orange-700";
+                if (pr.status === "En Proceso") badgeColor = "bg-blue-100 text-blue-700";
+                if (pr.status === "Cotizado") badgeColor = "bg-emerald-100 text-emerald-700";
+
+                let prodBadge = "bg-orange-100 text-orange-600 border border-orange-200";
+                if (pr.product.includes("Flexpace")) prodBadge = "bg-blue-100 text-blue-600 border border-blue-200";
+                if (pr.product.includes("Reubic")) prodBadge = "bg-emerald-100 text-emerald-600 border border-emerald-200";
+
+                tbody.innerHTML += `
+                    <tr class="hover:bg-slate-50 transition-colors">
+                        <td class="p-4 text-slate-500 font-mono text-xs whitespace-nowrap">${pr.timestamp}</td>
+                        <td class="p-4">
+                            <div class="font-bold text-slate-900">${pr.name}</div>
+                            <div class="text-xs text-slate-500">${pr.phone} | ${pr.email}</div>
+                        </td>
+                        <td class="p-4 text-slate-600 font-semibold">${pr.company}</td>
+                        <td class="p-4">
+                            <span class="px-2.5 py-1 rounded-full text-xs font-bold ${prodBadge}">${pr.product}</span>
+                        </td>
+                        <td class="p-4">
+                            <span class="font-bold text-slate-800">${pr.acquisition}</span>
+                        </td>
+                        <td class="p-4 text-slate-600">${pr.location}</td>
+                        <td class="p-4 text-slate-500 text-xs">${pr.timeframe}</td>
+                        <td class="p-4">
+                            <span class="px-2.5 py-1 rounded-full text-xs font-bold ${badgeColor}">${pr.status}</span>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        // Limpiar base de datos
+        function cleanDatabase() {
+            if (confirm("¿Estás seguro de que deseas eliminar todas las simulaciones de prospectos?")) {
+                prospectos = [];
+                renderTable();
+            }
+        }
+
+        // Simular prospectos ficticios rápidos
+        function generateMockData() {
+            const randomNames = ["Ing. Arturo Lozano", "Lic. Regina Cantú", "Arq. Daniel Elizondo", "Dr. Patricia Garza"];
+            const randomCompanies = ["Alfa Constructora", "Tecnología de Empaque", "Servicios Fronterizos", "Hospital del Norte"];
+            const products = ["Movilx®", "Flexpace®", "Reubic®"];
+            const schemes = ["Venta", "Renta", "Financiamiento", "Leasing"];
+            const states = ["San Luis Potosí, S.L.P.", "Saltillo, Coah.", "Guadalajara, Jal.", "Tampico, Tamps."];
+            const times = ["Inmediata", "Próximos 30 días", "Solo Cotización"];
+
+            const now = new Date();
+            const timestamp = now.toLocaleDateString() + " " + now.toLocaleTimeString();
+
+            const randomLead = {
+                timestamp: timestamp,
+                name: randomNames[Math.floor(Math.random() * randomNames.length)],
+                company: randomCompanies[Math.floor(Math.random() * randomCompanies.length)],
+                product: products[Math.floor(Math.random() * products.length)],
+                acquisition: schemes[Math.floor(Math.random() * schemes.length)],
+                location: states[Math.floor(Math.random() * states.length)],
+                timeframe: times[Math.floor(Math.random() * times.length)],
+                phone: "81" + Math.floor(10000000 + Math.random() * 90000000),
+                email: "contacto@empresasolar.com",
+                details: "Suministro urgente de oficina móvil temporal.",
+                status: "Nuevo"
+            };
+
+            prospectos.unshift(randomLead);
+            renderTable();
+        }
+
+        // Copiar Código de Apps Script al Portapapeles
+        function copyCode() {
+            const codeText = document.getElementById("code-snippet").innerText;
+            navigator.clipboard.writeText(codeText).then(() => {
+                const btnText = document.getElementById("copy-text");
+                const btnIcon = document.getElementById("copy-icon");
+                
+                btnText.textContent = "¡Copiado Exitosamente!";
+                btnIcon.className = "fa-solid fa-check text-emerald-400";
+                
+                setTimeout(() => {
+                    btnText.textContent = "Copiar Código de Automatización";
+                    btnIcon.className = "fa-regular fa-copy";
+                }, 3000);
+            }).catch(err => {
+                alert("Hubo un error al copiar el código. Inténtalo seleccionándolo manualmente.");
+            });
+        }
+    </script>
+</body>
+</html>
