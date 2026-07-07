@@ -202,11 +202,29 @@
                             </div>
 
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div>
-                                    <label class="block text-sm font-bold text-slate-700 mb-1.5">Ubicación del Proyecto (Ciudad / Estado) *</label>
-                                    <input type="text" id="project_location" required placeholder="Ej: Monterrey, N.L." 
-                                           class="w-full rounded-xl border-slate-200 border p-3 focus:outline-none focus:ring-2 focus:ring-orange-500 transition-all">
-                                </div>
+                               <div class="mb-4">
+    <label class="block text-sm font-medium text-slate-400 mb-1">Estado y Ciudad del Proyecto *</label>
+    <div class="relative">
+        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-500"><i class="fa-solid fa-map-location-dot"></i></span>
+        <input type="text" id="project_location" required class="w-full pl-10 pr-4 py-2.5 bg-slate-900 border border-slate-700 rounded-lg text-white focus:outline-none focus:border-orange-500 transition-colors" placeholder="Ej. Querétaro, Qro.">
+    </div>
+</div>
+
+<div class="mb-4">
+    <label class="block text-sm font-medium text-slate-400 mb-1">Dirección Completa (Calle, Número, Colonia)</label>
+    <div class="relative">
+        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-500"><i class="fa-solid fa-house-chimney"></i></span>
+        <input type="text" id="client_address" class="w-full pl-10 pr-4 py-2.5 bg-slate-900 border border-slate-700 rounded-lg text-white focus:outline-none focus:border-orange-500 transition-colors" placeholder="Ej. Av. Industrial #102, Col. Obrera">
+    </div>
+</div>
+
+<div class="mb-4">
+    <label class="block text-sm font-medium text-slate-400 mb-1">Enlace de Google Maps (Link)</label>
+    <div class="relative">
+        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-500"><i class="fa-solid fa-location-dot text-red-500"></i></span>
+        <input type="url" id="maps_link" class="w-full pl-10 pr-4 py-2.5 bg-slate-900 border border-slate-700 rounded-lg text-white focus:outline-none focus:border-orange-500 transition-colors" placeholder="https://maps.google.com/?q=...">
+    </div>
+</div>
                                 <div>
                                     <label class="block text-sm font-bold text-slate-700 mb-1.5">Urgencia / Fecha Estimada de Uso</label>
                                     <select id="timeframe" class="w-full rounded-xl border-slate-200 border p-3 bg-white focus:ring-2 focus:ring-orange-500 focus:outline-none transition-all">
@@ -503,12 +521,17 @@
     submitBtn.disabled = true;
 
     // Formatear los datos como parámetros de formulario directo (Método seguro para Google)
-    const formData = new URLSearchParams();
+   const formData = new URLSearchParams();
     formData.append("name", document.getElementById("full_name").value);
     formData.append("company", document.getElementById("company_name").value || "N/A");
     formData.append("product", document.querySelector('input[name="product_line"]:checked').value);
     formData.append("acquisition", document.querySelector('input[name="acquisition_type"]:checked').value);
     formData.append("location", document.getElementById("project_location").value);
+    
+    // ESTAS DOS LÍNEAS RECOLECTAN LOS NUEVOS CAMPOS:
+    formData.append("address", document.getElementById("client_address").value || "No proporcionada");
+    formData.append("maps", document.getElementById("maps_link").value || "No proporcionado");
+    
     formData.append("timeframe", document.getElementById("timeframe").value);
     formData.append("phone", document.getElementById("phone").value);
     formData.append("email", document.getElementById("email").value);
