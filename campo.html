@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         body { background-color: #0f172a; }
-        /* Personalización de los checkbox seleccionados */
         input[type="checkbox"]:checked + label {
             border-color: #f97316;
             background-color: rgba(249, 115, 22, 0.1);
@@ -35,18 +34,31 @@
                     <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">Vendedor *</label>
                     <select id="vendedor" required class="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-lg text-white focus:outline-none focus:border-orange-500 text-sm">
                         <option value="" disabled selected>Selecciona...</option>
-                        <option value="Hugo Terrón">Hugo Terrón</option>
-                        <option value="Asesor 1">Asesor 1</option>
-                        <option value="Asesor 2">Asesor 2</option>
+                        <option value="Lorena">Lorena</option>
+                        <option value="Maricela">Maricela</option>
+                        <option value="Alejandro">Alejandro</option>
+                        <option value="Julieta">Julieta</option>
+                        <option value="Johanna">Johanna</option>
+                        <option value="Andrea">Andrea</option>
+                        <option value="Luz">Luz</option>
+                        <option value="Cristel">Cristel</option>
+                        <option value="Jesús">Jesús</option>
+                        <option value="Oscar">Oscar</option>
+                        <option value="Gonzalo">Gonzalo</option>
                     </select>
                 </div>
                 <div>
                     <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">Sucursal *</label>
                     <select id="sucursal" required class="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-lg text-white focus:outline-none focus:border-orange-500 text-sm">
                         <option value="" disabled selected>Selecciona...</option>
-                        <option value="Bajío">Kuatro Bajío</option>
-                        <option value="Centro">Kuatro Centro</option>
-                        <option value="Norte">Kuatro Norte</option>
+                        <option value="México">México</option>
+                        <option value="Poza Rica">Poza Rica</option>
+                        <option value="Monterrey">Monterrey</option>
+                        <option value="Saltillo">Saltillo</option>
+                        <option value="Villahermosa">Villahermosa</option>
+                        <option value="Querétaro">Querétaro</option>
+                        <option value="Mérida">Mérida</option>
+                        <option value="Hermosillo">Hermosillo</option>
                     </select>
                 </div>
             </div>
@@ -119,10 +131,10 @@
             </div>
 
             <div>
-                <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Esquema Comercial *</label>
+                <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Esquema Comercial <span class="text-slate-500 text-[10px]">(Opcional)</span></label>
                 <div class="grid grid-cols-4 gap-2 text-center text-[11px]">
                     <label class="cursor-pointer">
-                        <input type="radio" name="acquisition_type" value="Venta" required class="peer hidden">
+                        <input type="radio" name="acquisition_type" value="Venta" class="peer hidden">
                         <div class="p-2 bg-slate-900 border border-slate-700 rounded-lg peer-checked:border-orange-500 peer-checked:bg-orange-500/10 transition-all text-white">Venta</div>
                     </label>
                     <label class="cursor-pointer">
@@ -148,6 +160,19 @@
                 </div>
             </div>
 
+            <div>
+                <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">Enlace de Google Maps <span class="text-slate-500 text-[10px]">(Opcional)</span></label>
+                <div class="flex gap-2">
+                    <div class="relative flex-1">
+                        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-500"><i class="fa-solid fa-location-dot text-red-500 text-sm"></i></span>
+                        <input type="url" id="maps_link" class="w-full pl-9 pr-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-white focus:outline-none focus:border-orange-500 text-sm" placeholder="Link generado o detectado">
+                    </div>
+                    <button type="button" onclick="detectarGPS()" id="gps-btn" class="px-3 bg-slate-700 hover:bg-orange-600 rounded-lg border border-slate-600 hover:border-orange-500 text-white transition-all flex items-center gap-1 text-xs font-bold" title="Detectar mi ubicación GPS actual">
+                        <i class="fa-solid fa-crosshairs text-sm animate-pulse"></i> GPS
+                    </button>
+                </div>
+            </div>
+
             <div class="pt-2">
                 <button type="submit" id="submit-btn" class="w-full py-3 bg-gradient-to-r from-orange-600 to-orange-500 hover:from-orange-500 hover:to-orange-400 text-white font-bold rounded-xl shadow-lg shadow-orange-950/20 transition-all flex items-center justify-center gap-2 text-sm tracking-wider uppercase">
                     Guardar Registro en Campo <i class="fa-solid fa-cloud-arrow-up"></i>
@@ -157,21 +182,54 @@
     </div>
 
     <script>
+        function detectarGPS() {
+            const gpsBtn = document.getElementById("gps-btn");
+            const mapsInput = document.getElementById("maps_link");
+            
+            if (!navigator.geolocation) {
+                alert("Tu celular o navegador no soporta la detección de GPS.");
+                return;
+            }
+
+            gpsBtn.innerHTML = "<i class='fa-solid fa-spinner animate-spin'></i> ...";
+            gpsBtn.disabled = true;
+
+            navigator.geolocation.getCurrentPosition(
+                function (position) {
+                    const lat = position.coords.latitude;
+                    const lon = position.coords.longitude;
+                    // Enlace corregido y limpio para Google Maps
+                    mapsInput.value = `https://www.google.com/maps?q=${lat},${lon}`;
+                    
+                    gpsBtn.innerHTML = "<i class='fa-solid fa-check text-green-400'></i> Listo";
+                    gpsBtn.classList.remove("bg-slate-700");
+                    gpsBtn.classList.add("bg-green-950", "border-green-500");
+                },
+                function (error) {
+                    gpsBtn.innerHTML = "<i class='fa-solid fa-crosshairs'></i> GPS";
+                    gpsBtn.disabled = false;
+                    alert("No pudimos acceder al GPS. Asegúrate de darle permiso de ubicación a la página en tu pantalla.");
+                },
+                { enableHighAccuracy: true, timeout: 10000 }
+            );
+        }
+
         function handleFormSubmit(event) {
             event.preventDefault();
 
-            // ⚠️ PEGA AQUÍ LA NUEVA URL DE GOOGLE APP SCRIPT GENERADA PARA ESTE SEGUNDO FORMULARIO
+            // ⚠️ RECUERDA PEGAR AQUÍ TU URL DE GOOGLE APPS SCRIPT TERMINADA EN /exec
             const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxJH1JwisTQsCTH9uhU27mFHNA5pkQHaaAZGrKdgLkymORiZNAkZB6wmFli9_scqk16aA/exec";
 
-            // Validar que al menos un espacio esté seleccionado
             const checkboxes = document.querySelectorAll('input[name="product_line"]:checked');
             if (checkboxes.length === 0) {
                 alert("Por favor, selecciona al menos una línea de Espacio Requerido.");
                 return;
             }
 
-            // Unir los productos seleccionados separados por comas (Ej: "Caseta Móvil, Flexpace")
             const productosSeleccionados = Array.from(checkboxes).map(cb => cb.value).join(", ");
+
+            const esquemaRadio = document.querySelector('input[name="acquisition_type"]:checked');
+            const esquemaValor = esquemaRadio ? esquemaRadio.value : "No definido";
 
             const submitBtn = document.getElementById("submit-btn");
             const originalText = submitBtn.innerHTML;
@@ -186,8 +244,9 @@
             formData.append("telefono", document.getElementById("phone").value || "No proporcionado");
             formData.append("correo", document.getElementById("email").value || "No proporcionado");
             formData.append("productos", productosSeleccionados);
-            formData.append("esquema", document.querySelector('input[name="acquisition_type"]:checked').value);
+            formData.append("esquema", esquemaValor);
             formData.append("ubicacion", document.getElementById("project_location").value);
+            formData.append("maps", document.getElementById("maps_link").value || "No proporcionado");
 
             fetch(GOOGLE_SCRIPT_URL, {
                 method: "POST",
@@ -195,12 +254,18 @@
                 mode: "no-cors"
             })
             .then(() => {
-                alert("¡Éxito Comercial!\n\nEl registro de campo ha sido guardado de forma directa y exitosa en Google Drive.");
+                alert("¡Éxito Comercial!\n\nEl registro de campo ha sido guardado con éxito.");
                 document.getElementById("campo-form").reset();
+                
+                // Resetear botón de GPS
+                const gpsBtn = document.getElementById("gps-btn");
+                gpsBtn.innerHTML = "<i class='fa-solid fa-crosshairs text-sm animate-pulse'></i> GPS";
+                gpsBtn.disabled = false;
+                gpsBtn.className = "px-3 bg-slate-700 hover:bg-orange-600 rounded-lg border border-slate-600 hover:border-orange-500 text-white transition-all flex items-center gap-1 text-xs font-bold";
             })
             .catch(error => {
                 console.error("Error:", error);
-                alert("Hubo un error de conexión con Google Sheets.");
+                alert("Hubo un error al conectar.");
             })
             .finally(() => {
                 submitBtn.innerHTML = originalText;
