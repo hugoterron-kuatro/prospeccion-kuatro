@@ -151,6 +151,17 @@
                     </label>
                 </div>
             </div>
+<!-- URGENCIA / FECHA ESTIMADA (NUEVO CAMPO OBLIGATORIO) -->
+            <div>
+                <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">Urgencia / Fecha Estimada de Uso *</label>
+                <select id="timeframe" required class="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-lg text-white focus:outline-none focus:border-orange-500 text-sm">
+                    <option value="" disabled selected>Selecciona una opción...</option>
+                    <option value="Inmediata (en una semana o menos)">Inmediata (en una semana o menos)</option>
+                    <option value="Próximos 30 días">Próximos 30 días</option>
+                    <option value="En un plazo de 2 a 3 meses">En un plazo de 2 a 3 meses</option>
+                    <option value="Sin definir / Solo cotizando para presupuesto futuro">Sin definir / Solo cotizando para presupuesto futuro</option>
+                </select>
+            </div>
 
             <div>
                 <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">Estado y Ciudad del Proyecto *</label>
@@ -245,7 +256,8 @@
             formData.append("correo", document.getElementById("email").value || "No proporcionado");
             formData.append("productos", productosSeleccionados);
             formData.append("esquema", esquemaValor);
-            formData.append("ubicacion", document.getElementById("project_location").value);
+            formData.append("urgencia", document.getElementById("timeframe").value);
+formData.append("ubicacion", document.getElementById("project_location").value);
             formData.append("maps", document.getElementById("maps_link").value || "No proporcionado");
 
             fetch(GOOGLE_SCRIPT_URL, {
