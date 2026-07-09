@@ -100,9 +100,10 @@
 
             <hr class="border-slate-700 my-2">
 
+           <!-- ESPECIFICACIÓN DEL ESPACIO ACTUALIZADO (SELECCIÓN MÚLTIPLE) -->
             <div>
                 <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Especificación del Espacio Requerido * <span class="text-orange-400 text-[10px]">(Puedes elegir varios)</span></label>
-                <div class="grid grid-cols-2 gap-2 text-xs">
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs">
                     <div>
                         <input type="checkbox" id="prod_caseta" name="product_line" value="Caseta Móvil" class="hidden">
                         <label for="prod_caseta" class="flex items-center justify-between p-2.5 bg-slate-900 border border-slate-700 rounded-lg cursor-pointer hover:border-slate-500 transition-all">
@@ -116,19 +117,14 @@
                         </label>
                     </div>
                     <div>
-                        <input type="checkbox" id="prod_modulo" name="product_line" value="Módulo Reubicable" class="hidden">
+                        <input type="checkbox" id="prod_modulo" name="product_line" value="Reubic" class="hidden">
                         <label for="prod_modulo" class="flex items-center justify-between p-2.5 bg-slate-900 border border-slate-700 rounded-lg cursor-pointer hover:border-slate-500 transition-all">
-                            <span>Módulos Reubicables</span> <i class="fa-solid fa-warehouse text-slate-500"></i>
-                        </label>
-                    </div>
-                    <div>
-                        <input type="checkbox" id="prod_booth" name="product_line" value="Mobile Booth" class="hidden">
-                        <label for="prod_booth" class="flex items-center justify-between p-2.5 bg-slate-900 border border-slate-700 rounded-lg cursor-pointer hover:border-slate-500 transition-all">
-                            <span>Mobile Booths</span> <i class="fa-solid fa-door-open text-slate-500"></i>
+                            <span>Reubic</span> <i class="fa-solid fa-warehouse text-slate-500"></i>
                         </label>
                     </div>
                 </div>
             </div>
+
 
             <div>
                 <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Esquema Comercial <span class="text-slate-500 text-[10px]">(Opcional)</span></label>
