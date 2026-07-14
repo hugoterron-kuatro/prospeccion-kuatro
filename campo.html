@@ -181,6 +181,16 @@
                 </div>
             </div>
 
+<!-- NOTAS / OBSERVACIONES (OPCIONAL) -->
+            <div>
+                <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">Notas / Observaciones <span class="text-slate-500 text-[10px]">(Opcional)</span></label>
+                <div class="relative">
+                    <span class="absolute top-2.5 left-3 text-slate-500"><i class="fa-solid fa-comment-dots text-sm"></i></span>
+                    <textarea id="notes" rows="3" class="w-full pl-9 pr-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-white focus:outline-none focus:border-orange-500 text-sm resize-none" placeholder="Detalles adicionales, comentarios del cliente, requerimientos especiales..."></textarea>
+                </div>
+            </div>
+
+
             <div class="pt-2">
                 <button type="submit" id="submit-btn" class="w-full py-3 bg-gradient-to-r from-orange-600 to-orange-500 hover:from-orange-500 hover:to-orange-400 text-white font-bold rounded-xl shadow-lg shadow-orange-950/20 transition-all flex items-center justify-center gap-2 text-sm tracking-wider uppercase">
                     Guardar Registro en Campo <i class="fa-solid fa-cloud-arrow-up"></i>
@@ -255,6 +265,7 @@
             formData.append("esquema", esquemaValor);
             formData.append("urgencia", document.getElementById("timeframe").value);
 formData.append("ubicacion", document.getElementById("project_location").value);
+formData.append("notas", document.getElementById("notes").value || "Sin observaciones");
             formData.append("maps", document.getElementById("maps_link").value || "No proporcionado");
 
             fetch(GOOGLE_SCRIPT_URL, {
